@@ -2,8 +2,11 @@ package jurassicpark;
 
 import Clases.Dinosaurio;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -101,11 +104,50 @@ public class Utils {
         }
     }
 
-    public static Dinosaurio crearDino() {
-        return null;
+    public static Dinosaurio crearDino(Dinosaurio obj_dino) {
+
+        Scanner scanner = new Scanner(System.in);
+        String nombre;
+        String especie;
+        float altura;
+        float peso;
+
+        System.out.println("Introduce nombre:");
+        nombre = scanner.nextLine();
+
+        System.out.println("Introduce especie:");
+        especie = scanner.nextLine();
+        
+        System.out.println("Introduce altura:");
+        altura = scanner.nextFloat();
+        
+        System.out.println("Introduce peso:");
+        peso= scanner.nextFloat();
+        
+        obj_dino = new Dinosaurio(nombre, especie, altura, peso, 0, null);
+
+        return obj_dino;
+    }
+
+    public static void addDino(List<Dinosaurio> dinosaurios, Dinosaurio obj_dino) {
+        
+        dinosaurios.add(obj_dino);
     }
     
-    public static void addDino(){
+    public static boolean escribirDino(String rutaArchivo, List<Dinosaurio> dinosaurios){
         
+        boolean result;
+        
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo, true))) {
+            for (Dinosaurio dino : dinosaurios) {
+                oos.writeObject(dino);
+            }
+            System.out.println("Dinosaurios añadidos al archivo correctamente.");
+            result = true;
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+            result = false;
+        }
+        return result;
     }
 }

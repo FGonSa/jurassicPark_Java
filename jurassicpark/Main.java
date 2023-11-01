@@ -2,6 +2,8 @@ package jurassicpark;
 
 import Clases.Dinosaurio;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -10,8 +12,12 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
+
         int optionMenu = -1;
         Dinosaurio obj_dino = null;
+        List<Dinosaurio> dinosaurios = new ArrayList<>();
+        boolean result;
+        String rutaDinos = "C:\\Users\\Francisco Javier\\Documents\\NetBeansProjects\\jurassicPark\\src\\datafiles\\dinosaurs.bin";
 
         //START
         // Obtener la ruta de la carpeta src del proyecto
@@ -32,31 +38,39 @@ public class Main {
         do {
             Utils.menuPrincipal();
             optionMenu = Utils.escogerOpcion(Constantes.MIN_MENU_OPTION, Constantes.MAX_MENU_OPTION);
-            
-            switch(optionMenu){
-                
+
+            switch (optionMenu) {
+
                 //Añadir Dinosaurio
-                case 1: 
-                    obj_dino = Utils.crearDino();
+                case 1:
+                    obj_dino = Utils.crearDino(obj_dino);
+                    Utils.addDino(dinosaurios, obj_dino);
+                    result = Utils.escribirDino(rutaDinos, dinosaurios);
+
                     break;
-                
+
                 //Añadir Fósil
-                case 2: break;
-                
+                case 2:
+                    break;
+
                 //Mostrar Dinosaurio
-                case 3: break;
-                
+                case 3:
+                    break;
+
                 //Mostrar Fósil
-                case 4: break;
-                
+                case 4:
+                    break;
+
                 //Generar Informe
-                case 5: break;
-                
+                case 5:
+                    break;
+
                 //Salir
-                case 0: break;
+                case 0:
+                    break;
             }
-            
-        } while (optionMenu < Constantes.MIN_MENU_OPTION || optionMenu > Constantes.MAX_MENU_OPTION);
+
+        } while (optionMenu !=0);
 
         System.out.println("Aplicación Cerrada."); //Exit
 
