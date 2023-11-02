@@ -2,7 +2,9 @@ package jurassicpark;
 
 import jurassicpark.utils.Utils;
 import Clases.Dinosaurio;
+import Clases.Fosil;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import jurassicpark.utils.binFiles;
@@ -13,13 +15,15 @@ import jurassicpark.utils.binFiles;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         int optionMenu = -1;
+        int optionDino = -1;
+        int optionFosil= -1;
         Dinosaurio obj_dino = null;
         List<Dinosaurio> dinosaurios = new ArrayList<>();
+        List<Fosil> fosiles = new ArrayList<>();
         boolean result;
-
 
         //START
         // Obtener la ruta de la carpeta src del proyecto
@@ -32,8 +36,8 @@ public class Main {
         String nombreFicheroDino = "dinosaurs.bin";
         String nombreFicheroFosiles = "fosiles.bin";
         String rutaCompleta = rutaSrc + nombreDirectorio + File.separator;
-        String rutaDinos = rutaCompleta + nombreFicheroDino+ File.separator;
-        String rutaFosiles = rutaCompleta + nombreFicheroFosiles+ File.separator;
+        String rutaDinos = rutaCompleta + nombreFicheroDino + File.separator;
+        String rutaFosiles = rutaCompleta + nombreFicheroFosiles + File.separator;
 
         //Creamos el directorio y ficheros binarios
         System.out.println("Iniciando programa...");
@@ -50,20 +54,53 @@ public class Main {
                 case 1:
                     obj_dino = Utils.crearDino(obj_dino);
                     Utils.addDino(dinosaurios, obj_dino);
-                    result = binFiles.procesoDino(rutaDinos, obj_dino);
+                    binFiles.escribirDinosaurios(rutaDinos, dinosaurios);
 
                     break;
 
                 //Añadir Fósil
                 case 2:
+                    
+                    do{
+                    if (dinosaurios.size() != 0) {
+                        System.out.println("Escoge un dinosaurio para asignarle Fósil: ");
+                        Utils.listarDinos(dinosaurios);
+                        optionDino = Utils.escogerOpcion(Constantes.MIN_MENU_OPTION, dinosaurios.size());
+                    } else {
+                        System.out.println("Todavía no hay dinosaurios registrados.");
+                        System.out.println("Debe haber almenos un dinosaurio registrado para poder añadir un fósil.");
+                        optionDino = 0;
+                    }
+                    }while(optionDino != 0);
                     break;
 
                 //Mostrar Dinosaurio
                 case 3:
+                     do{
+                    if (dinosaurios.size() != 0) {
+                        System.out.println("Escoge un dinosaurio para asignarle Fósil: ");
+                        Utils.listarDinos(dinosaurios);
+                        optionDino = Utils.escogerOpcion(Constantes.MIN_MENU_OPTION, dinosaurios.size());
+                    } else {
+                        System.out.println("Todavía no hay dinosaurios registrados.");
+                        System.out.println("Debe haber almenos un dinosaurio registrado para poder añadir un fósil.");
+                        optionDino = 0;
+                    }
+                    }while(optionDino != 0);
                     break;
 
                 //Mostrar Fósil
                 case 4:
+                    do{
+                     if (fosiles.size() != 0) {
+                        System.out.println("Escoge un fósil para ver sus datos: ");
+                        Utils.listarDinos(dinosaurios);
+                        optionFosil = Utils.escogerOpcion(Constantes.MIN_MENU_OPTION, fosiles.size());
+                    } else {
+                        System.out.println("Todavía no hay fósiles registrados.");
+                        optionFosil = 0;
+                    }
+                    }while(optionFosil != 0);
                     break;
 
                 //Generar Informe
@@ -75,7 +112,7 @@ public class Main {
                     break;
             }
 
-        } while (optionMenu !=0);
+        } while (optionMenu != 0);
 
         System.out.println("Aplicación Cerrada."); //Exit
 

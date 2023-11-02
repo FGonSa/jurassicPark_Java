@@ -1,9 +1,11 @@
 package jurassicpark.utils;
 
 import Clases.Dinosaurio;
+import Clases.Fosil;
 import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -55,7 +57,7 @@ public class Utils {
         if (!directorio.exists()) {
             // Si el directorio no existe, crearlo
             if (directorio.mkdir()) {
-                System.out.println("Se ha creado el directorio " + nombreDirectorio + " en " +rutaCompleta);
+                System.out.println("Se ha creado el directorio " + nombreDirectorio + " en " + rutaCompleta);
             } else {
                 System.err.println("No se ha podido crear el directorio " + nombreDirectorio);
                 return;
@@ -115,22 +117,56 @@ public class Utils {
 
         System.out.println("Introduce especie:");
         especie = scanner.nextLine();
-        
+
         System.out.println("Introduce altura:");
         altura = scanner.nextFloat();
-        
+
         System.out.println("Introduce peso:");
-        peso= scanner.nextFloat();
-        
+        peso = scanner.nextFloat();
+
         obj_dino = new Dinosaurio(nombre, especie, altura, peso, 0, null);
 
         return obj_dino;
     }
 
+    public static Fosil crearFosil(Fosil obj_fosil, Dinosaurio obj_dino) {
+
+        Scanner scanner = new Scanner(System.in);
+        String nombre;
+        int profundidadDescubierto;
+        String yacimiento;
+
+        System.out.println("Introduce nombre:");
+        nombre = scanner.nextLine();
+
+        System.out.println("Introduce a qué profundidad fue descubierto:");
+        profundidadDescubierto = scanner.nextInt();
+
+        System.out.println("Introduce nombre del yacimiento:");
+        yacimiento = scanner.nextLine();
+
+        obj_fosil = new Fosil(nombre, profundidadDescubierto, yacimiento, obj_dino);
+
+        return obj_fosil;
+    }
+
     public static void addDino(List<Dinosaurio> dinosaurios, Dinosaurio obj_dino) {
-        
         dinosaurios.add(obj_dino);
     }
-    
-    
+
+    public static void listarDinos(List<Dinosaurio> dinosaurios) {
+
+        int acc = 1;
+        Iterator<Dinosaurio> it = dinosaurios.iterator();
+
+        //El iterador nos permite recorrer el List como si fuera un Array y acceder
+        //a sus casillas
+        while (it.hasNext()) {
+            System.out.println(acc + ".- " + it.next().getNombre());
+            acc++;
+        }
+        System.out.println("0.- Volver atrás");
+
+    }
+
 }
