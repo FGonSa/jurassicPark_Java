@@ -1,9 +1,11 @@
 package jurassicpark;
 
+import jurassicpark.utils.Utils;
 import Clases.Dinosaurio;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import jurassicpark.utils.binFiles;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Main {
         Dinosaurio obj_dino = null;
         List<Dinosaurio> dinosaurios = new ArrayList<>();
         boolean result;
-        String rutaDinos = "C:\\Users\\Francisco Javier\\Documents\\NetBeansProjects\\jurassicPark\\src\\datafiles\\dinosaurs.bin";
+
 
         //START
         // Obtener la ruta de la carpeta src del proyecto
@@ -29,10 +31,13 @@ public class Main {
         String nombreDirectorio = "datafiles";
         String nombreFicheroDino = "dinosaurs.bin";
         String nombreFicheroFosiles = "fosiles.bin";
+        String rutaCompleta = rutaSrc + nombreDirectorio + File.separator;
+        String rutaDinos = rutaCompleta + nombreFicheroDino+ File.separator;
+        String rutaFosiles = rutaCompleta + nombreFicheroFosiles+ File.separator;
 
         //Creamos el directorio y ficheros binarios
         System.out.println("Iniciando programa...");
-        Utils.creacionFicherosPrincipales(rutaSrc, nombreDirectorio, nombreFicheroDino, nombreFicheroFosiles);
+        Utils.creacionFicherosPrincipales(rutaCompleta, nombreDirectorio, nombreFicheroDino, nombreFicheroFosiles);
 
         //MENU PRINCIPAL
         do {
@@ -45,7 +50,7 @@ public class Main {
                 case 1:
                     obj_dino = Utils.crearDino(obj_dino);
                     Utils.addDino(dinosaurios, obj_dino);
-                    result = Utils.escribirDino(rutaDinos, dinosaurios);
+                    result = binFiles.procesoDino(rutaDinos, obj_dino);
 
                     break;
 

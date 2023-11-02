@@ -1,10 +1,8 @@
-package jurassicpark;
+package jurassicpark.utils;
 
 import Clases.Dinosaurio;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -48,22 +46,22 @@ public class Utils {
         return option;
     }
 
-    public static void creacionFicherosPrincipales(String rutaSrc, String nombreDirectorio, String nombreFicheroDino, String nombreFicheroFosiles) {
+    public static void creacionFicherosPrincipales(String rutaCompleta, String nombreDirectorio, String nombreFicheroDino, String nombreFicheroFosiles) {
 
         // Comprobar si el directorio Ficheros existe en la carpeta src
         //Hay que entender que TODO es un fichero, incluso una carpeta
-        File directorio = new File(rutaSrc + nombreDirectorio);
+        File directorio = new File(rutaCompleta + File.separator);
 
         if (!directorio.exists()) {
             // Si el directorio no existe, crearlo
             if (directorio.mkdir()) {
-                System.out.println("Se ha creado el directorio " + nombreDirectorio + " en " + rutaSrc);
+                System.out.println("Se ha creado el directorio " + nombreDirectorio + " en " +rutaCompleta);
             } else {
                 System.err.println("No se ha podido crear el directorio " + nombreDirectorio);
                 return;
             }
         } else {
-            System.out.println("El directorio " + nombreDirectorio + " ya existe en " + rutaSrc);
+            System.out.println("El directorio " + nombreDirectorio + " ya existe");
         }
 
         // Comprobar si el fichero existe dentro del directorio Ficheros
@@ -134,20 +132,5 @@ public class Utils {
         dinosaurios.add(obj_dino);
     }
     
-    public static boolean escribirDino(String rutaArchivo, List<Dinosaurio> dinosaurios){
-        
-        boolean result;
-        
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo, true))) {
-            for (Dinosaurio dino : dinosaurios) {
-                oos.writeObject(dino);
-            }
-            System.out.println("Dinosaurios añadidos al archivo correctamente.");
-            result = true;
-        } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo: " + e.getMessage());
-            result = false;
-        }
-        return result;
-    }
+    
 }
